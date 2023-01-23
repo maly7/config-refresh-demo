@@ -1,15 +1,15 @@
 plugins {
 	java
-	id("org.springframework.boot") version "3.0.1"
-	id("io.spring.dependency-management") version "1.1.0"
+	id("org.springframework.boot") version "2.4.13"
+	id("io.spring.dependency-management") version "1.0.15.RELEASE"
 }
 
 group = "com.github.maly7"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_11
 
-extra["springCloudVersion"] = "2022.0.0"
-extra["springCloudServicesVersion"] = "4.0.0"
+extra["springCloudVersion"] = "2020.0.6"
+extra["springCloudServicesVersion"] = "3.2.1.RELEASE"
 
 repositories {
 	mavenCentral()
@@ -35,5 +35,11 @@ tasks.withType<Test> {
 }
 
 springBoot {
-	buildInfo()
+	buildInfo {
+		properties {
+			additional = mapOf(
+				"spring.boot.version" to "2.4.13"
+			)
+		}
+	}
 }
