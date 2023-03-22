@@ -1,9 +1,10 @@
 spring:
   application:
     name: config-refresh-demo
+  profiles:
+    active: dev
 management:
   endpoints:
     web:
       exposure:
         include: '*'
-
