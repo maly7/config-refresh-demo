@@ -20,11 +20,11 @@ public class MenuController {
 
 	@GetMapping("/menu/special")
 	public Mono<String> menuSpecial() {
-		return Mono.just(menu.special());
+		return Mono.just(menu.getSpecial());
 	}
 
 	@GetMapping("/coffee/special")
 	public Mono<String> coffeeSpecial() {
-		return Mono.just(coffee.special());
+		return Mono.just(coffee.getSpecial());
 	}
 }
