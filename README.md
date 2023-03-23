@@ -6,7 +6,7 @@ There is a working example using Spring Boot 3 on the `boot3` branch.
 
 ## Getting Started
 
-For the configuration repo - https://github.com/maly7/cloud-config-test
+Fork the configuration repo - https://github.com/maly7/cloud-config-test
 
 Create the application in Azure Spring Apps:
 
