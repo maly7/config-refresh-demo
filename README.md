@@ -87,7 +87,7 @@ menu:
   special: Seafood Lasagna
 ```
 
-Wait a few minutes for the configuration to update in Application Configuration Service, then refresh using the actuator.
+Wait a few minutes for Application Configuration Service to update the ConfigMap, then refresh using the actuator.
 
 ```console
 ❯ curl "${APP_URL}/actuator/refresh" -d {} -H "Content-Type: application/json"
@@ -102,19 +102,29 @@ properties.
 Now access the endpoint again:
 
 ```shell
+curl $APP_URL/menu/special
 curl $APP_URL/coffee/special
 ```
 
-And you'll notice that in the output that the `/coffee/special` has been updated because the `Coffee` bean is annotated 
-with `@RefreshScope` as well as the consuming Bean `MenuController`. 
+And you should see output similar to:
+
+```console
+❯ curl $APP_URL/menu/special
+Seafood Lasagna%                                                                                                                                                                                                                                                                          
+❯ curl $APP_URL/coffee/special
+Colombia Aponte%
+``` 
+
+And you'll notice that in the output that the responses have changed because the `Coffee`, `Menu`, and `MenuController` 
+beans are annotated with `@RefreshScope`
 
 ## Appendix
 
 Notes:
-* If you hava a `DataSource` bean that is a `HikariDataSource`, it can not be refreshed. It is the default value for `spring.cloud.refresh.never-refreshable`. Choose a different `DataSource` implementation if you need it to be refreshed.
 * `@RefreshScope` must be on the consuming `@Bean` and not just the one supplying the configuration
-* `@RefreshScope` works (technically) on a @`Configuration` class, but it might lead to surprising behavior. For example, it does not mean that all the `@Beans` defined in that class are themselves in @RefreshScope. Specifically, anything that depends on those beans cannot rely on them being updated when a refresh is initiated, unless it is itself in `@RefreshScope`. In that case, it is rebuilt on a refresh and its dependencies are re-injected. At that point, they are re-initialized from the refreshed `@Configuration`).
 * `@RefreshScope` didn't seem to affect record classes
+* If you hava a `DataSource` bean that is a `HikariDataSource`, it can not be refreshed. It is the default value for `spring.cloud.refresh.never-refreshable`. Choose a different `DataSource` implementation if you need it to be refreshed.
+* `@RefreshScope` works (technically) on a @`Configuration` class, but it might lead to surprising behavior. For example, it does not mean that all the `@Beans` defined in that class are themselves in @RefreshScope. Specifically, anything that depends on those beans cannot rely on them being updated when a refresh is initiated, unless it is itself in `@RefreshScope`. In that case, it is rebuilt on a refresh and its dependencies are re-injected. At that point, they are re-initialized from the refreshed `@Configuration`).
 
 Links:
 * [Refresh Scope](https://docs.spring.io/spring-cloud-commons/docs/current/reference/html/#refresh-scope)
