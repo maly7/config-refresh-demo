@@ -87,6 +87,9 @@ menu:
   special: Seafood Lasagna
 ```
 
+> Note: the dev profile is activated in the `application.yml` file using `spring.profiles.active`. This property can
+> also be provided using the environment variable `--env SPRING_PROFILES_ACTIVE=dev`.
+
 Wait a few minutes for Application Configuration Service to update the ConfigMap, then refresh using the actuator.
 
 ```console
